@@ -2,7 +2,7 @@
 const cart = JSON.parse(localStorage.getItem("cart")) || [];
 const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
 
-// 📋 Render cart items and total
+// 🧾 Render cart items and total price
 const cartList = document.getElementById("cart-list");
 const totalElement = document.getElementById("total");
 
@@ -16,7 +16,7 @@ if (cartList && totalElement) {
   totalElement.textContent = total;
 }
 
-// 💳 PayPal button
+// 💳 PayPal button configuration
 paypal.Buttons({
   createOrder: (data, actions) => {
     return actions.order.create({
@@ -30,7 +30,7 @@ paypal.Buttons({
     return actions.order.capture().then(details => {
       alert("✅ Payment successful!");
 
-      // 📝 Build order object
+      // 📝 Build order payload
       const orderData = {
         name: `${details.payer.name.given_name} ${details.payer.name.surname}`,
         email: details.payer.email_address,
@@ -40,10 +40,11 @@ paypal.Buttons({
         timestamp: new Date().toISOString()
       };
 
+      // Save name for thankyou.html personalization
       localStorage.setItem("customerName", orderData.name);
 
-      // 📤 Log order to Google Sheets via Apps Script
-      fetch("https://script.google.com/macros/s/AKfycbz1-7Rox-lLLlBm5pDrpgZ_agiQz41Ot_fta3zCdl8ptq0juLEzaDQ-6VH59SnulXxC/exec", {
+      // 📦 Send order to proxy for Google Sheets logging
+      fetch("https://vectrolis.vercel.app/api/log-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData)
