@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Checkout – Vectrolis</title>
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AXxfs1iFlJrAk3A3h9-mvYwGVaC89OOTLAX0lkYizuupw9IQ9YQE2RmyCsBPT7ndXA6dBULV72yUfD6K"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <img src="vectrolis.png" alt="Vectrolis Logo" />
+      </div>
+      <a href="index.html" class="cart-link">🏠</a>
+    </header>
+
+    <main class="cart-content">
+      <h1>Confirm Your Order</h1>
+      <ul id="cart-list"></ul>
+      <p>Total: €<span id="total">0.00</span></p>
+      <div id="paypal-button-container"></div>
+    </main>
+
+    <script src="checkout.js"></script>
+  </body>
+</html>

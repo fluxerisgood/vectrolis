@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your Cart – Vectrolis Electronics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <a href="index.html"
+          ><img src="vectrolis.png" alt="Vectrolis Logo"
+        /></a>
+      </div>
+      <a href="cart.html" class="cart-link"
+        >🛒 <span class="cart-count">0</span></a
+      >
+    </header>
+
+    <main>
+      <h1>Your Shopping Cart</h1>
+
+      <ul id="cart-list" class="cart-list"></ul>
+
+      <div class="cart-total">
+        <p>Total: €<span id="total">0.00</span></p>
+        <button class="checkout-button">Proceed to Checkout</button>
+      </div>
+    </main>
+
+    <script>
+      // Load cart and render contents
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const cartList = document.getElementById("cart-list");
+      const totalElement = document.getElementById("total");
+
+      function renderCart() {
+        cartList.innerHTML = "";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+          total += item.price;
+          const li = document.createElement("li");
+          li.innerHTML = `
+          ${item.product} - €${item.price.toFixed(2)}
+          <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+          cartList.appendChild(li);
+        });
+
+        totalElement.textContent = total.toFixed(2);
+      }
+
+      function removeFromCart(index) {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+        updateCartCount();
+      }
+
+      function updateCartCount() {
+        const count = cart.length;
+        const counter = document.querySelector(".cart-count");
+        if (counter) counter.textContent = count;
+      }
+
+      document
+        .querySelector(".checkout-button")
+        .addEventListener("click", () => {
+          window.location.href = "checkout.html";
+        });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderCart();
+        updateCartCount();
+      });
+    </script>
+  </body>
+</html>

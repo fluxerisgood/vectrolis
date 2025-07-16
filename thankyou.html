@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Thank You | Vectrolis</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header><h1>🎉 Thank You!</h1></header>
+    <section>
+      <p id="message">
+        Your order has been received. We’ll be in touch soon via email.
+      </p>
+      <a href="index.html" class="cart-link">← Back to Shop</a>
+    </section>
+
+    <script>
+      const name = localStorage.getItem("customerName");
+      if (name) {
+        document.getElementById(
+          "message"
+        ).textContent = `Thanks, ${name}! Your order was received and we’ll contact you soon.`;
+        localStorage.removeItem("customerName");
+      }
+    </script>
+  </body>
+</html>
